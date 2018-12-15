@@ -65,4 +65,4 @@ pruebaInfinita1 = puedenZafar [namibia, namibiaPunto1]
 --              no termina nunca, porque quiere buscar "Mineria" entre los recursos
 pruebaInfinita2 = deudaTotal [namibia, namibiaPunto1]
 --              se puede porque al no evaluar los recursos solamente suma deuda
--- relacionado con evaluacion diferida, solo se evalua lo que se necesita
+-- relacionado con la lazy evaluation, solo se evalua lo que se necesita
