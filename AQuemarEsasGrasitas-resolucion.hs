@@ -50,7 +50,7 @@ colina inclinacion unaPersona minutos = quemarCalorias unaPersona (2*minutos*inc
 montaña :: Int -> Ejercicio
 montaña inclinacion unaPersona minutos = (colina (inclinacion+3) (colina inclinacion unaPersona (div minutos 2)) (div minutos 2))
 ------------------------------------------ 4. ---------------------------------------------------------
-type Rutina= (Nombre,Duracion,[Ejercicio])
+type Rutina= (Nombre,Duracion,[Ejercicio]) = .-.
 
 
 ------------------------------------------ 5. ---------------------------------------------------------
