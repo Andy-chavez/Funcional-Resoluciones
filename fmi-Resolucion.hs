@@ -47,7 +47,8 @@ poblacionActiva unPais = activosPublico unPais + activosPrivado unPais
 prestarYExplotar :: [Estrategia]
 prestarYExplotar  = [explotar "Mineria", prestarMillonesA 200 ]
 
-aplicarReceta receta unPais = foldr1 receta unPais -- sino puedo hacer foldr ($) pais receta
+aplicarReceta :: Estrategia->Pais->Pais
+aplicarReceta receta unPais = foldr ($) unPais receta
 ------------------------------------- 4. // ORDEN SUPERIOR,APLICACION PARCIAL Y COMPOSICION
 puedenZafar :: [Pais] -> [Pais]
 puedenZafar = filter $ elem "Petroleo" . recursosNaturales
@@ -55,9 +56,9 @@ puedenZafar = filter $ elem "Petroleo" . recursosNaturales
 deudaTotal :: [Pais] -> Float
 deudaTotal =  foldr ((+) . deuda) 0
 ------------------------------------- 5. // RECURSIVIDAD
---estaOrdenado :: Pais -> [Estrategia] -> Bool
---estaOrdenado pais [receta] = True
---estaOrdenado pais (receta1:receta2:recetas) = (pbi . aplicarReceta receta1 pais) <= (pbi . aplicarReceta receta2 pais )&& estaOrdenado pais (receta2:recetas)  
+estaOrdenado :: Pais -> [Estrategia] -> Bool
+estaOrdenado pais [receta] = True
+estaOrdenado pais (receta1:receta2:recetas) = (pbi( aplicarReceta receta1 pais)) <= (pbi( aplicarReceta receta2 pais)) && estaOrdenado pais (receta2:recetas)  
 ------------------------------------- 6. // TEORICO
 recursosNaturalesInfinitos :: [String]
 recursosNaturalesInfinitos = "Energia" : recursosNaturalesInfinitos
@@ -65,4 +66,4 @@ pruebaInfinita1 = puedenZafar [namibia, namibiaPunto1]
 --              no termina nunca, porque quiere buscar "Mineria" entre los recursos
 pruebaInfinita2 = deudaTotal [namibia, namibiaPunto1]
 --              se puede porque al no evaluar los recursos solamente suma deuda
--- relacionado con la lazy evaluation, solo se evalua lo que se necesita
+-- relacionado con evaluacion diferida, solo se evalua lo que se necesita

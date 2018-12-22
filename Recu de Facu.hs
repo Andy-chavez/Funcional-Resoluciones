@@ -1,7 +1,8 @@
 --Recu de Facu
 --------- Punto 1.
--- (a->Bool)->(a->a) -> [a]-> [a] ni la mas palida que nombre ponerle
+-- f :: (a->Bool)->(a->b) -> [a]-> [d] // filtrarYCambiarListaSiCumple
 -- f a b c = filter (not . a) c ++ (map b.filter a) c
+
 import Text.Show.Functions
 --------- Punto 2.
 type Calorias = Int
@@ -47,19 +48,19 @@ pipona :: Persona -> Bool
 pipona unaPersona = calorias unaPersona > 2000 
 --------- Punto 4.
 ensalada :: Comida
-ensalada = tomate.zanahoria --se me repiten algunos nutrientes, como lo cambio?
+ensalada = tomate.zanahoria
 
 hamburguesa :: Comida
 hamburguesa = carne.tomate.pan blanco
 --------- Punto 5.
---comidaCompleta :: [Comida] -> Persona -> Persona
-comidaCompleta comidas unaPersona = foldl1 comidas unaPersona --no me estaria funcionando
+comidaCompleta :: [Comida] -> Persona -> Persona
+comidaCompleta comidas unaPersona = foldl1 (.) comidas unaPersona
 --------- Punto 6.
 sofia2= UnaPersona 2 []
 sofia1= UnaPersona 1 []
 personasPrueba= [sofia,sofia1,sofia2]
-menuPrueba = [facturas,hamburguesa]
---todosSatisfechos:: [Comida] -> [Persona]-> Bool   // que onda ese tipado
+menuPrueba = [facturas,hamburguesa,ensalada]
+todosSatisfechos:: [Comida] -> [Persona]-> Bool
 todosSatisfechos comidas personas = all satisfecha (map (comidaCompleta comidas) personas)
 
 satisfecha :: Persona ->Bool
@@ -68,7 +69,11 @@ satisfecha unaPersona = pipona unaPersona || alMenos5Nutrientes unaPersona
 alMenos5Nutrientes :: Persona ->Bool
 alMenos5Nutrientes unaPersona = ((>5).length.nutrientes) unaPersona
 --------- Punto 7.
-
+data Fiesta = UnaFiesta{ nombre :: String, menu:: [Comida], invitados :: [Persona] } deriving (Show)
+colarse :: Persona -> Fiesta -> Fiesta
+colarse colado fiestaAColarse 
+  | todosSatisfechos (menu fiestaAColarse) (invitados fiestaAColarse) = fiestaAColarse{invitados= invitados fiestaAColarse ++ [colado]}
+  | otherwise = fiestaAColarse
 --------- Punto 8.
 --a. Tendrá las mismas que las que se le definieron a sofia al comienzo ya que haskell no produce efecto colateral
 --b. No ya que se continuaria evaluando si todos estan satisfechos, a menos de que al comienzo de la evaluacion se encuentre uno que no cumpla
