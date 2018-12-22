@@ -60,18 +60,21 @@ aplicarExperimento unExperimento = foldl1 (.) (transformaciones unExperimento)
 ratonEj4 = UnAnimal 10 "Raton" ["Destruenglonir","Hacer planes desalmados"]
 experimentoEj4 = UnExperimento [pinkificar, inteligenciaSuperior 10, superpoderes] antropomorfico
 -------------------------------------------- 5. --------------------------------------------------
-reporte1 :: [Animal] -> [String] -> Experimento -> [Int]
+{-reporte1 :: [Animal] -> [String] -> Experimento -> [Int]
 reporte1 animales habilidades unExperimento = map coeficiente (filtrarPor  )
 reporte2 :: [Animal] -> [String] -> Experimento -> [Int]
 animales habilidades unExperimento =
 reporte3 :: [Animal] -> [String] -> Experimento -> [Int]
 animales habilidades unExperimento =
+-}
+tieneElementoDeLista :: [Capacidades] -> Capacidades->Bool
+tieneElementoDeLista listaDeCapacidades unaCapacidad = elem unaCapacidad listaDeCapacidades -- Delegacion innecesaria? tal vez
 
+estaAlgunaCapacidad :: [Capacidades] -> Animal ->Bool
+estaAlgunaCapacidad listaDeCapacidades unAnimal = any (tieneElementoDeLista (capacidades unAnimal)) listaDeCapacidades
 
-estaAlgunaCapacidad :: [Animal] -> Animal ->Bool
-estaAlgunaCapacidad listaDeAnimales unAnimal = any (tieneElementoDeLista (capacidades unAnimal)) listaDeAnimales
-
-reporte1 (filter ((estaAlgunaCapacidad).(aplicarExperimento unExperimento)) listaDeAnimales)
+reporte1 :: [Animal]-> [Capacidades]->Experimento-> [Int]
+reporte1 listaDeAnimales listaDeCapacidades unExperimento = map coefIntelectual (filter ((estaAlgunaCapacidad listaDeCapacidades).(aplicarExperimento unExperimento)) listaDeAnimales)
   
 reporte3 ::[Animal]-> [Capacidades]->Experimento-> [Int]
 reporte3 listaDeAnimales listaDeCapacidades unExperimento=map length (map capacidades (filter (not.(estaAlgunaCapacidad listaDeCapacidades).(aplicarExperimento unExperimento)) listaDeAnimales))
@@ -81,7 +84,6 @@ estanTodas listaDeCapacidades unAnimal = all (tieneElementoDeLista (capacidades 
 
 reporte2  :: [Animal]-> [Capacidades]->Experimento-> [String]
 reporte2 listaDeAnimales listaDeCapacidades unExperimento  = map especie (filter ((estanTodas listaDeCapacidades).(aplicarExperimento unExperimento)) listaDeAnimales)
-
 
 -------------------------------------------- 6. --------------------------------------------------
 
